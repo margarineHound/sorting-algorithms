@@ -7,14 +7,14 @@ def strictly_increasing(L):
 
 def main():
    array = []
-   array.extend(range(1000000,0, -1))
+   array.extend(range(100000,0, -1))
    # array = [8,7,6,5,4,3,2,1]
    # array.extend([1,12,12,12,12,12,12,12,12,13,24,24,24])
    # print(array)
-   result = merge_sort(array)
+   [result, count] = merge_sort(array)
    # print(result)
    value = strictly_increasing(result)
-   print(repr(value))
+   print('count = ', count)
 
 if __name__ == '__main__':
     main()

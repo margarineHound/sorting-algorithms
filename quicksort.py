@@ -11,12 +11,13 @@ def quicksort(A):
         if l >= r:
             return
 
-
         p = choosePivot(l, r)
         pivot = A[p]
+        print(pivot)
         if p != l:
             swap(p, l, A)
         divider = Parition(A, l, r, pivot)
+        print(A)
         qsort(A, l, divider-2)
         qsort(A, divider, r)
 
@@ -45,7 +46,7 @@ def choosePivot(l, r):
 
 if __name__ == "__main__":
 
-    arr = list(range(1,200))
+    arr = list(range(1,20))
     random.shuffle(arr)
     print(arr)
     quicksort(arr)
