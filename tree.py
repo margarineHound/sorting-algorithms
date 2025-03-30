@@ -1,10 +1,14 @@
 class Node:
-    def __init__(self, key, parent =  None):
+    def __init__(self, key, parent =  None, size = 1):
         self.parent = parent
         self.key = key
         self.left = None
         self.right = None
         self.height = 0
+        self.size = size
+        self.min = key
+        self.max = key
+        self.sum = key
         return
 
 
@@ -13,6 +17,38 @@ class Tree:
         self.root = Node(key)
         self.depth = 0
         self.items = 0
+        self.rebalance()
+
+    def subtree_at(self,node, i):
+        nl = self.size(node.left)
+        if i < node:
+            return self.subtree_at(node.left, i)
+        elif i == nl:
+            return nl
+        else:
+            return self.subtree_at(node.right, i-nl-1)
+
+    def find_prev(self, node : Node, key =None) -> Node:
+        if node.key == key:
+            return node.parent
+
+        if key < node.key:
+            return self.find_prev (node.left, key)
+
+        else:
+            return self.find_prev (node.right, key)
+
+
+    def fine_next(self, node : Node, key =None) -> Node:
+        if node.key == key:
+            return node.parent
+
+        if key < node.key:
+            return self.fine_next(node.left, key)
+
+        else:
+            return self.fine_next(node.right, key)
+
 
     def traverse(self, node: Node = None):
         if node == None:
@@ -35,6 +71,7 @@ class Tree:
         if self.root == None:
             self.root = Node(key)
             self.depth = 1
+
             return
 
         print(f"valye: {key} current node: {node.key}")
@@ -42,27 +79,30 @@ class Tree:
             print('value exists')
             return
 
+        node.size += 1
+        node.height +=1
+        node.min = min(node.min, key )
+        node.max = max(node.max, key)
+        node.sum += key
+
         if key < node.key:
+
             if node.left:
                 print("going left")
-                node.height += 1
                 return self.insert(key, node.left)
             else:
                 print('added left')
                 newNode = Node(key=key, parent=node)
-                node.height += 1
                 node.left = newNode
                 return
         else:
             if node.right:
                 print("going right")
-                node.height += 1
                 return self.insert(key, node.right)
             else:
                 print("added right")
                 newNode = Node(key=key, parent=node)
                 node.right = newNode
-                node.height += 1
                 return
 
         print('ended')
