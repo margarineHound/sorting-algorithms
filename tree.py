@@ -59,10 +59,17 @@ class Tree:
         if node.left:
             self.traverse(node.left)
 
+
         print(f"key: {node.key} height: {node.height}")
         if node.right:
+
             self.traverse(node.right)
+
         return
+            # right += res
+
+        # node.height = max(left,right)
+
 
     def insert(self, key, node = None):
         if node == None:
@@ -74,9 +81,9 @@ class Tree:
 
             return
 
-        print(f"valye: {key} current node: {node.key}")
+        # print(f"valye: {key} current node: {node.key}")
         if node.key == key:
-            print('value exists')
+            # print('value exists')
             return
 
         node.size += 1
@@ -88,25 +95,27 @@ class Tree:
         if key < node.key:
 
             if node.left:
-                print("going left")
+                # print("going left")
                 return self.insert(key, node.left)
             else:
-                print('added left')
+                # print('added left')
                 newNode = Node(key=key, parent=node)
                 node.left = newNode
                 return
         else:
             if node.right:
-                print("going right")
+                # print("going right")
                 return self.insert(key, node.right)
             else:
-                print("added right")
+                # print("added right")
                 newNode = Node(key=key, parent=node)
                 node.right = newNode
                 return
 
-        print('ended')
+        # print('ended')
         return
+
+
 
 
 if __name__== "__main__":
@@ -125,5 +134,7 @@ if __name__== "__main__":
     mytree.insert(15)
     mytree.insert(15)
     mytree.insert(15)
+    mytree.update()
+    mytree.update()
     mytree.traverse()
     print("end")
