@@ -17,7 +17,53 @@ class Tree:
         self.root = Node(key)
         self.depth = 0
         self.items = 0
-        self.rebalance()
+
+    def rebalance(self, node: Node):
+
+        leftHeight = node.left.height
+        rightHeight = node.left.height
+        bf = leftHeight - rightHeight
+        node.height = max(rightHeight, leftHeight) + 1
+        if abs(bf)<= 1:
+            return self.rebalance(node.parent)
+        elif bf < -1:
+            self.rightRotate()
+
+        else:
+            self.leftrotate(node.right)
+
+
+
+    def rightRotate(self, node : Node ):
+
+        y = node.left
+        T3 = y.right
+
+        parent = node.parent
+
+        node.parent = y
+        y.parent = parent
+        y.right = node
+        node.right = T3
+
+        self.update_update(node)
+        self.update_update(node.parent)
+        return
+
+    def leftRotate(self, node: Node):
+
+
+        pass
+
+
+
+
+
+
+    def update_update(self, node: Node):
+        if node:
+
+            node.height = 1 + max(node.left.height, node.right.height)
 
     def subtree_at(self,node, i):
         nl = self.size(node.left)
@@ -83,7 +129,7 @@ class Tree:
 
         # print(f"valye: {key} current node: {node.key}")
         if node.key == key:
-            # print('value exists')
+            print('value exists')
             return
 
         node.size += 1
@@ -96,24 +142,22 @@ class Tree:
 
             if node.left:
                 # print("going left")
-                return self.insert(key, node.left)
+                self.insert(key, node.left)
             else:
                 # print('added left')
                 newNode = Node(key=key, parent=node)
                 node.left = newNode
-                return
         else:
             if node.right:
                 # print("going right")
-                return self.insert(key, node.right)
+                self.insert(key, node.right)
             else:
                 # print("added right")
                 newNode = Node(key=key, parent=node)
                 node.right = newNode
-                return
 
         # print('ended')
-        return
+        return self.rebalance()
 
 
 
